@@ -24,40 +24,66 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _searchField(),
-          SizedBox(
-            height: 40,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Text(
-                  'Category',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Container(
-                height: 150,
-                color: Colors.green,
-                child: ListView.builder(
-                    itemCount: categories.length,
-                    itemBuilder: (context, index) {
-                      return Container();
-                    }),
-              )
-            ],
-          )
-        ],
+        children: [_searchField(), SizedBox(height: 40), _categoriesSection()],
       ),
+    );
+  }
+
+  Column _categoriesSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 20),
+          child: Text(
+            'Category',
+            style: TextStyle(
+                color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Container(
+          height: 120,
+          padding: EdgeInsets.only(left: 20, right: 20),
+          child: ListView.separated(
+              itemCount: categories.length,
+              scrollDirection: Axis.horizontal,
+              separatorBuilder: (context, index) => SizedBox(
+                    width: 25,
+                  ),
+              itemBuilder: (context, index) {
+                return Container(
+                  width: 100,
+                  decoration: BoxDecoration(
+                      color: categories[index].boxColor.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(16)),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                              color: Colors.white, shape: BoxShape.circle),
+                          child: Padding(
+                            padding: EdgeInsets.all(8),
+                            child: SvgPicture.asset(categories[index].iconPath),
+                          )),
+                      Text(
+                        categories[index].name,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                            color: Colors.black),
+                      )
+                    ],
+                  ),
+                );
+              }),
+        )
+      ],
     );
   }
 
